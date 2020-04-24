@@ -7,36 +7,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.workflowinsights.dto.TaskDTO;
-import com.workflowinsights.service.TaskServiceStub;
+import com.workflowinsights.service.TaskService;
 
 @Controller
 public class WorkflowInsightsController {
 	
 	@Autowired
-	private TaskServiceStub taskServiceStub;
+	private TaskService taskServiceStub;
 	
 	@RequestMapping(value="/createtask")
-	public String createTask(TaskDTO taskDTO) {
-		
+	public String createTask(TaskDTO taskDTO) throws Exception {
+
+		if (taskDTO.getTaskname() != null){
+		WorkflowinsightsApplication.addTask(taskDTO);
+		}
+
 		return"index";
 		
 	}
 	
 	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-	
-	@RequestMapping(value="/" , method=RequestMethod.GET)
-	public String read(Model model) {
-		TaskDTO taskDTO = taskServiceStub.fetchAllTasks();
-		model.addAttribute("taskName",taskDTO.getTaskname());
-		model.addAttribute("taskDescription",taskDTO.getDescription());
-		model.addAttribute("taskEstimatedHours",taskDTO.getEstimatedHours());
-		model.addAttribute("taskActualHours",taskDTO.getActualHours());
-
-
-
+	public String index() throws Exception {
+		WorkflowinsightsApplication.getAllTasks();
 		return "index";
 	}
 	

@@ -14,7 +14,6 @@
     function operationSelectCheck(nameSelect)
 {
     var val = nameSelect.options[nameSelect.selectedIndex].value;
-    document.getElementById("createtask").style.display = val == 'createtask' ? "block" : 'none';
     document.getElementById("modifytask").style.display = val == 'modifytask' ? "block" : 'none';
     document.getElementById("deletetask").style.display = val == 'deletetask' ? "block" : 'none';
 }
@@ -24,18 +23,9 @@
 
 <select id="operationSelect" onchange="operationSelectCheck(this);">
     <option value="selectop">Select Operation</option>
-    <option value="createtask">Create Task</option>
     <option value="modifytask">Modify Task</option>
     <option value="deletetask">Delete Task</option>
   </select>
-
-<div id="createtask" style="display:none;">
-<form action="#" th:action="@{/createtask}" th:object="${taskDTO}" method="GET">
-Task Name: <input type="text" name="taskname" th:field="*{taskname}"/><br/>
-Description: <input type="text" name="description" th:field="*{description}"/><br/>
-Estimated Hours: <input type="text" name="estimatedhours" th:field="*{estimatedHours}"/><br/>
-<button name="submitcreate" type="submit" value="0">Create Task</button>
-</form>
 </div>
 <div id="modifytask" style="display:none;">
 <form action="#" th:action="@{/modifytask}" th:object="${taskDTO}" method="GET">
@@ -46,9 +36,9 @@ Estimated Hours: <input type="text" name="estimatedhours" th:field="*{estimatedH
 </form>
 </div>
 <div id="deletetask" style="display:none;">
-<form action="#" th:action="@{/deletetask}" th:object="${deleteString}" method="GET">
+<form action="#" th:action="@{/deletetask}" method="GET">
     Task to Delete: 
-    <select id="deleteSelect" th:object="${task}">
+    <select id="deleteSelect" name="taskname">
         <option>Select a task to delete</option>
         <option th:value="${task}" type="text" name="taskname" th:each="task: ${tasks}" th:text="${task.taskname}"></option>
     </select><br/>

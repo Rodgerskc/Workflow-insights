@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
@@ -55,19 +56,18 @@ public class WorkflowInsightsController {
 	@RequestMapping(value="/modifytask")
 	public String modifyTask(TaskDTO taskDTO) throws Exception {
 
-		if (taskDTO.getTaskname() != null){
-		WorkflowinsightsApplication.addTask(taskDTO);
-		}
 
 		return"forward:/";
 		
 	}
 
 	@RequestMapping(value="/deletetask")
-	public String deleteTask(String taskname) throws Exception {
-		System.out.println("Delete DTO name" + taskname);
+	public String deleteTask(@RequestParam String taskname) throws Exception {
+		String[] tasksplit = taskname.split("\n");
+		String name = tasksplit[0];
+		System.out.println("Delete DTO name " + name);
 		if (taskname != null){
-			WorkflowinsightsApplication.deleteTask(taskname);
+			WorkflowinsightsApplication.deleteTask(name);
 			}
 		return"forward:/";
 		

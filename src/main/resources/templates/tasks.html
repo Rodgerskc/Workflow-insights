@@ -28,7 +28,6 @@
                     <option value="modifytask">Modify Task</option>
                     <option value="deletetask">Delete Task</option>
                   </select>
-
                 <div id="createtask" style="display:none;">
                     <form action="#" th:action="@{/createtask}" th:object="${taskDTO}" method="GET">
                     Task Name: <input type="text" class="form-control" name="taskname" th:field="*{taskname}"/><br/>
@@ -46,9 +45,9 @@
                     </form>
                 </div>
                 <div id="deletetask" style="display:none;">
-                    <form action="#" th:action="@{/deletetask}" th:object="${deleteString}" method="GET">
+                    <form action="#" th:action="@{/deletetask}" method="GET">
                         Task to Delete:
-                        <select id="deleteSelect" class="form-control" th:object="${task}">
+                        <select id="deleteSelect" class="form-control" name="taskname">
                             <option>Select a task to delete</option>
                             <option th:value="${task}" type="text" name="taskname" th:each="task: ${tasks}" th:text="${task.taskname}"></option>
                         </select><br/>

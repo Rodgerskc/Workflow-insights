@@ -14,6 +14,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.v1.FirestoreSettings;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
@@ -32,10 +33,9 @@ public class WorkflowinsightsApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(WorkflowinsightsApplication.class, args);
 
-	  FirebaseOptions options = new FirebaseOptions.Builder()
-		.setCredentials(GoogleCredentials.getApplicationDefault())
-		.setDatabaseUrl("https://workflow-insights.firebaseio.com")
-		.build();
+		FirebaseOptions options = new FirebaseOptions.Builder()
+				.setCredentials(GoogleCredentials.getApplicationDefault())
+				.setDatabaseUrl("https://workflow-insights.firebaseio.com").build();
 	  
 		FirebaseApp.initializeApp(options);
 		db = FirestoreClient.getFirestore();
@@ -46,9 +46,9 @@ public class WorkflowinsightsApplication {
 		System.out.println("Successfully wrote to Firestore: " + future.get().getUpdateTime());
 	}
 
-	public static void deleteTask(String taskname) throws Exception {
-		ApiFuture<WriteResult> future = db.collection("Tasks").document(taskname).delete();
-		System.out.println("Successfully deleted from Firestore: " + future.get().getUpdateTime());
+	public static void deleteTask(String name) throws Exception {
+		ApiFuture<WriteResult> future1 = db.collection("Tasks").document(name).delete();
+		System.out.println("Successfully deleted from Firestore: " + future1.get().getUpdateTime());
 	}
 
 	public static ArrayList<TaskDTO> getAllTasks() throws Exception {

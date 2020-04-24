@@ -1,49 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+    <head>
+    <meta charset="ISO-8859-1"/>
+    <title>WorkflowInsights.com</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
- <link rel="stylesheet" href="styles.css">
+    </head>
+    <script th:inline="javascript">
+        function operationSelectCheck(nameSelect)
+        {
+            var val = nameSelect.options[nameSelect.selectedIndex].value;
+            document.getElementById("createtask").style.display = val == 'createtask' ? "block" : 'none';
+            document.getElementById("modifytask").style.display = val == 'modifytask' ? "block" : 'none';
+            document.getElementById("deletetask").style.display = val == 'deletetask' ? "block" : 'none';
+        }
+    </script>
+    <body>
+        <div th:replace="fragments/topnav :: navbar"></div>
 
-<meta charset="ISO-8859-1"/>
-<title>WorkflowInsights.com</title>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-</head>
-<script th:inline="javascript">
-    function operationSelectCheck(nameSelect)
-{
-    var val = nameSelect.options[nameSelect.selectedIndex].value;
-    document.getElementById("modifytask").style.display = val == 'modifytask' ? "block" : 'none';
-    document.getElementById("deletetask").style.display = val == 'deletetask' ? "block" : 'none';
-}
-</script>
-<body style="padding:20px;">
-<div th:replace="fragments/topnav :: navbar"></div>
-
-<select id="operationSelect" onchange="operationSelectCheck(this);">
-    <option value="selectop">Select Operation</option>
-    <option value="modifytask">Modify Task</option>
-    <option value="deletetask">Delete Task</option>
-  </select>
-</div>
-<div id="modifytask" style="display:none;">
-<form action="#" th:action="@{/modifytask}" th:object="${taskDTO}" method="GET">
-    Task Name: <input type="text" name="taskname" th:field="*{taskname}"/><br/>
-    Description: <input type="text" name="description" th:field="*{description}"/><br/>
-    Estimated Hours: <input type="text" name="estimatedhours" th:field="*{estimatedHours}"/><br/>
-    <button name="submitmodify" type="submit" value="0">Modify Task</button>
-</form>
-</div>
-<div id="deletetask" style="display:none;">
-<form action="#" th:action="@{/deletetask}" method="GET">
-    Task to Delete: 
-    <select id="deleteSelect" name="taskname">
-        <option>Select a task to delete</option>
-        <option th:value="${task}" type="text" name="taskname" th:each="task: ${tasks}" th:text="${task.taskname}"></option>
-    </select><br/>
-    <button name="submitdelete" type="submit" value="0">Delete Task</button>
-</form>
-</div>
-</body>
+        <div class="background">
+            <div class="content">
+                <select id="operationSelect" class="form-control" onchange="operationSelectCheck(this);">
+                    <option value="selectop">Select Operation</option>
+                    <option value="createtask">Create Task</option>
+                    <option value="modifytask">Modify Task</option>
+                    <option value="deletetask">Delete Task</option>
+                  </select>
+                <div id="createtask" style="display:none;">
+                    <form action="#" th:action="@{/createtask}" th:object="${taskDTO}" method="GET">
+                    Task Name: <input type="text" class="form-control" name="taskname" th:field="*{taskname}"/><br/>
+                    Description: <input type="text" class="form-control" name="description" th:field="*{description}"/><br/>
+                    Estimated Hours: <input type="text" class="form-control" name="estimatedhours" th:field="*{estimatedHours}"/><br/>
+                    <button name="submitcreate" class="btn btn-primary form-control" type="submit" value="0">Create Task</button>
+                    </form>
+                </div>
+                <div id="modifytask" style="display:none;">
+                    <form action="#" th:action="@{/modifytask}" th:object="${taskDTO}" method="GET">
+                        Task Name: <input type="text" class="form-control" name="taskname" th:field="*{taskname}"/><br/>
+                        Description: <input type="text" class="form-control" name="description" th:field="*{description}"/><br/>
+                        Estimated Hours: <input type="text" class="form-control" name="estimatedhours" th:field="*{estimatedHours}"/><br/>
+                        <button name="submitmodify" class="btn btn-primary form-control" type="submit" value="0">Modify Task</button>
+                    </form>
+                </div>
+                <div id="deletetask" style="display:none;">
+                    <form action="#" th:action="@{/deletetask}" method="GET">
+                        Task to Delete:
+                        <select id="deleteSelect" class="form-control" name="taskname">
+                            <option>Select a task to delete</option>
+                            <option th:value="${task}" type="text" name="taskname" th:each="task: ${tasks}" th:text="${task.taskname}"></option>
+                        </select><br/>
+                        <button name="submitdelete" class="btn btn-primary form-control" type="submit" value="0">Delete Task</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

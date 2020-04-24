@@ -19,6 +19,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firestore.v1.WriteRequest;
 import com.workflowinsights.dto.TaskDTO;
+import com.workflowinsights.service.TaskService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -45,12 +46,16 @@ public class WorkflowinsightsApplication {
 		System.out.println("Successfully wrote to Firestore: " + future.get().getUpdateTime());
 	}
 
+	public static void deleteTask(String taskname) throws Exception {
+		ApiFuture<WriteResult> future = db.collection("Tasks").document(taskname).delete();
+		System.out.println("Successfully deleted from Firestore: " + future.get().getUpdateTime());
+	}
+
 	public static ArrayList<TaskDTO> getAllTasks() throws Exception {
 		ApiFuture<QuerySnapshot> future = db.collection("Tasks").get();
 		ArrayList<TaskDTO> tasks = new ArrayList<TaskDTO>();
 		for (QueryDocumentSnapshot doc : future.get()) {
-			System.out.println(doc.getData());
-			//tasks.add(doc);
+			tasks.add(TaskService.initTask(doc));
 		}
 		return tasks;
 	}

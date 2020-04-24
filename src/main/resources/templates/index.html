@@ -12,12 +12,18 @@
 <div th:replace="fragments/topnav :: navbar"></div>
 
 <h1>My Current Tasks</h1>
-<br/>
-<div style="font-weight:bold;">
-<p th:text="${taskName}"/>
+
+<div th:each="task: ${tasks}">
+    <h5>Task Name</h5>
+<div th:text="${task.taskname}"/><br>
+    <h5>Description</h5>
+<div th:text="${task.description}"/><br>
+    <h5>Estimated Hours</h5>
+<div th:text="${task.estimatedHours}"/><br>
+    <h5>Actual hours</h5>
+<div th:text="${task.actualHours}"/><br><hr>
 </div>
-<p th:text="${taskDescription}"/>
-Estimated Hours: <p th:text="${taskEstimatedHours}"/>
-Actual Hours: <p th:text="${taskActualHours}"/>
+
+</tbody>
 </body>
 </html>

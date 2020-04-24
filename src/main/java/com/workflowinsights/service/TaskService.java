@@ -10,14 +10,16 @@ import com.workflowinsights.dto.TaskDTO;
 public class TaskService {
 	
 	
-	public TaskDTO initTask(QueryDocumentSnapshot snapshot) {
+	public static TaskDTO initTask(QueryDocumentSnapshot snapshot) {
+
 		TaskDTO taskDTO = new TaskDTO();
-		
-		//taskDTO.setTaskID(snapshot.get("taskID"));
-		taskDTO.setEstimatedHours(2.5);
-		taskDTO.setDescription("Complete programming assignment.");
-		taskDTO.setTaskname("Assignment 1");
-		taskDTO.setActualHours(0);
+
+		taskDTO.setTaskID(snapshot.getLong("taskID").intValue());
+		taskDTO.setEstimatedHours(snapshot.getLong("estimatedHours").intValue());
+		taskDTO.setDescription((String) snapshot.get("description"));
+		taskDTO.setTaskname((String) snapshot.get("taskname"));
+		taskDTO.setActualHours(snapshot.getLong("actualHours").intValue());
+
 		return taskDTO;
 		
 	}

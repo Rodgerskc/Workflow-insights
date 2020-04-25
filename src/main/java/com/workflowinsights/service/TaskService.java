@@ -3,13 +3,16 @@ package com.workflowinsights.service;
 import org.springframework.stereotype.Component;
 
 import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
 import com.workflowinsights.dto.TaskDTO;
 
 @Component
 public class TaskService {
 	
-	
+	/**
+	 * Task DTO Building Service
+	 * @param snapshot QueryDocumentSnapshot from Firestore
+	 * @return TaskDTO Object with properties from Firestore
+	 */
 	public static TaskDTO initTask(QueryDocumentSnapshot snapshot) {
 
 		TaskDTO taskDTO = new TaskDTO();

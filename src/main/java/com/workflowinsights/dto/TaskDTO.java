@@ -1,6 +1,5 @@
 package com.workflowinsights.dto;
 
-import com.google.cloud.firestore.QueryDocumentSnapshot;
 
 public class TaskDTO {
 	

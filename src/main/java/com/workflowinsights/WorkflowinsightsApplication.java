@@ -3,7 +3,9 @@ package com.workflowinsights;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.rmi.server.UID;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ser.std.CollectionSerializer;
 import com.google.api.core.ApiFuture;
@@ -47,8 +49,14 @@ public class WorkflowinsightsApplication {
 	}
 
 	public static void deleteTask(String name) throws Exception {
-		ApiFuture<WriteResult> future1 = db.collection("Tasks").document(name).delete();
-		System.out.println("Successfully deleted from Firestore: " + future1.get().getUpdateTime());
+		ApiFuture<WriteResult> future = db.collection("Tasks").document(name.trim()).delete();
+		System.out.println("Successfully deleted from Firestore: " + future.get().getUpdateTime());
+	}
+
+	public static void modifyTask(String id, String estimatedHours, String description) throws Exception {
+		System.out.println(id);
+		ApiFuture<WriteResult> future = db.collection("Tasks").document(id).update("estimatedHours", estimatedHours,"description", description);
+		System.out.println("Successfully deleted from Firestore: " + future.get().getUpdateTime());
 	}
 
 	public static ArrayList<TaskDTO> getAllTasks() throws Exception {
@@ -57,6 +65,7 @@ public class WorkflowinsightsApplication {
 		for (QueryDocumentSnapshot doc : future.get()) {
 			tasks.add(TaskService.initTask(doc));
 		}
+		System.out.println(tasks);
 		return tasks;
 	}
 

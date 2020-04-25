@@ -37,10 +37,13 @@
                     </form>
                 </div>
                 <div id="modifytask" style="display:none;">
-                    <form action="#" th:action="@{/modifytask}" th:object="${taskDTO}" method="GET">
-                        Task Name: <input type="text" class="form-control" name="taskname" th:field="*{taskname}"/><br/>
-                        Description: <input type="text" class="form-control" name="description" th:field="*{description}"/><br/>
-                        Estimated Hours: <input type="text" class="form-control" name="estimatedhours" th:field="*{estimatedHours}"/><br/>
+                    <form action="#" th:action="@{/modifytask}" method="GET">
+                        Task Name: <select id="deleteSelect" class="form-control" name="id">
+                            <option>Select a task to modify</option>
+                            <option th:value="${task}" type="text" name="taskname" th:each="task: ${tasks}" th:text="${task.taskname}"></option>
+                        </select><br/>
+                        Description: <input type="text" class="form-control" name="description"/><br/>
+                        Estimated Hours: <input type="text" class="form-control" name="estimatedhours"/><br/>
                         <button name="submitmodify" class="btn btn-primary form-control" type="submit" value="0">Modify Task</button>
                     </form>
                 </div>

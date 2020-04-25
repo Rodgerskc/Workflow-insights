@@ -24,13 +24,6 @@ public class WorkflowInsightsController {
 		model.addAttribute("tasks", tasks);
 		return "index";
 	}
-	
-	
-	@RequestMapping(value="/newtask", method=RequestMethod.GET)
-	public String read1(Model model) {
-		model.addAttribute("taskDTO", new TaskDTO());
-		return"newtask";
-	}
 
 	@RequestMapping(value="/tasks", method=RequestMethod.GET)
 	public String manageTasks(Model model) throws Exception {
@@ -54,9 +47,12 @@ public class WorkflowInsightsController {
 	}
 
 	@RequestMapping(value="/modifytask")
-	public String modifyTask(TaskDTO taskDTO) throws Exception {
+	public String modifyTask(@RequestParam String id, @RequestParam String description, @RequestParam String estimatedhours, TaskDTO taskDTO) throws Exception {
 
-
+		if (taskDTO.getTaskname() != null){
+			WorkflowinsightsApplication.modifyTask(id, estimatedhours, description);
+			}
+	
 		return"forward:/";
 		
 	}

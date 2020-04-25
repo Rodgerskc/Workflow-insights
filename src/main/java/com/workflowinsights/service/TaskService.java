@@ -13,8 +13,8 @@ public class TaskService {
 	public static TaskDTO initTask(QueryDocumentSnapshot snapshot) {
 
 		TaskDTO taskDTO = new TaskDTO();
-
-		taskDTO.setTaskID(snapshot.getLong("taskID").intValue());
+		
+		taskDTO.setId(snapshot.getId());
 		taskDTO.setEstimatedHours(snapshot.getLong("estimatedHours").intValue());
 		taskDTO.setDescription((String) snapshot.get("description"));
 		taskDTO.setTaskname((String) snapshot.get("taskname"));

@@ -1,19 +1,21 @@
 package com.workflowinsights.dto;
 
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+
 public class TaskDTO {
 	
-	private int taskID;
-	public int getTaskID() {
-		return taskID;
-	}
-	public void setTaskID(int taskID) {
-		this.taskID = taskID;
-	}
 	private String taskname;
 	private String description;
 	private double estimatedHours;
 	private double actualHours;
+	private String id;
 	
+	public String getId(){
+		return id;
+	}
+	public void setId(String id){
+		this.id = id;
+	}
 	public String getTaskname() {
 		return taskname;
 	}
